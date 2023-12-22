@@ -1,32 +1,31 @@
-const nodemailer = require("nodemailer");
+// controllers/sendMail.js
+const nodemailer = require('nodemailer');
 
-const sendMail = async (req,res) =>{
-  let testAccount = await nodemailer.createTestAccount();  
+const sendMail = async (req, res) => {
+  const { name, email, message } = req.body;
 
-
-  // connect with the smtpt server
-  let transporter = await nodemailer.createTransport({
-    service: "gmail",
+  // Create transporter
+  let transporter = nodemailer.createTransport({
+    service: 'gmail',
     host: 'smtp.gmail.com',
     port: 587,
-    secure:false,
+    secure: false,
     auth: {
-        user: 'niharikasable@gmail.com',
-        pass: 'vacg qorb wqwb tfll'
-    }
-});
+      user: 'niharikasable@gmail.com', // Update with your Gmail email
+      pass: 'vacg qorb wqwb tfll', // Update with your Gmail password
+    },
+  });
 
-let info = await transporter.sendMail({
-    from: '"Nene" <niharikasable@gmail.com>', // sender address
-    to: "mandar2330wawoo@gmail.com", // list of receivers
-    subject: "Greetings", // Subject line
-    text: "Hello and good morning", // plain text body
-    html: "<b>Hello and good morning</b>", // html body
-});
+  // Compose email
+  let info = await transporter.sendMail({
+    from: '"Nene" <niharikasable@gmail.com>',
+    to: 'mandar2330wawoo@gmail.com',
+    subject: 'Contact Form Submission',
+    text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+  });
 
-console.log("Message sent: %s", info.messageId);
+  console.log('Message sent:', info.messageId);
   res.send(info);
-
 };
 
 module.exports = sendMail;
