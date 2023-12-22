@@ -1,22 +1,17 @@
-// index.js
 const express = require('express');
 const path = require('path');
-//const bodyParser = require('body-parser'); // Add this line
-//const cors = require('cors'); // Add this line
 const app = express();
 const port = 5000;
 const sendMail = require('../controllers/sendMail');
 
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'src')));
-//app.use(bodyParser.json()); // Add this line
-//app.use(cors()); // Add this line
+// Serve the static files from the React build
+app.use(express.static(path.join(__dirname, '../path/to/your/react-app/build')));
 
 app.get('/', (req, res) => {
-  res.send('I am a server');
+  res.sendFile(path.join(__dirname, 'C:\Users\Hp\Documents\GitHub\Nodemailer_Test\my-react-app', 'index.html'));
 });
 
-app.post('/mail', sendMail); // Change to POST method
+app.post('/mail', sendMail);
 
 const start = async () => {
   try {
@@ -27,3 +22,4 @@ const start = async () => {
 };
 
 start();
+
