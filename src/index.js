@@ -4,7 +4,7 @@ const app = express();
 const port = 5000;
 const sendMail = require("../controllers/sendMail");
 
-app.use(express.static(path.join(__dirname, "src")));
+app.use(express.static(path.join(__dirname, "../src/index.html")));
 
 app.get("/",(req,res)=>{
     res.send("I am a server");
